@@ -1,17 +1,21 @@
 const path = require('path')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const Webpack = require('webpack')
 
 module.exports = {
-	mode: 'development',
-	entry: path.resolve(__dirname, '../src/index.js'),
+	mode: 'production',
+	entry: path.resolve(__dirname, '../src/app.tsx'),
 	output: {
 		path: path.resolve(__dirname, '../dist'),
-		filename: 'bundle.js'
+		filename: 'bundle.js',
+		libraryTarget: 'umd',
+		umdNamedDefine: true
 	},
 
-	devtool: 'inline-source-map',
+	optimization: {
+		minimize: false,
+		namedModules: true
+	},
 
 	module: {
 		rules: [
@@ -119,27 +123,19 @@ module.exports = {
 	},
 
 	externals: {
-		// react: 'window.React',
-		// 'react-dom': 'window.ReactDOM || window.React',
-		// 'react-router': 'window.ReactRouter'
+		react: {
+			root: 'React',
+			commonjs2: 'react',
+			commonjs: 'react',
+			amd: 'react'
+		},
+		'react-dom': {
+			root: 'ReactDOM',
+			commonjs2: 'react-dom',
+			commonjs: 'react-dom',
+			amd: 'react-dom'
+		}
 	},
 
-	devServer: {
-		contentBase: path.join(__dirname, '../dist'),
-		port: 7777,
-		// hot: true,
-		// hotOnly: true
-		historyApiFallback: true
-	},
-
-	plugins: [
-		// new CleanWebpackPlugin(),
-
-		new HtmlWebpackPlugin({
-			title: 'Development',
-			template: path.resolve(__dirname, '../public/index.html')
-		}),
-
-		new Webpack.HotModuleReplacementPlugin()
-	]
+	plugins: [new CleanWebpackPlugin()]
 }
