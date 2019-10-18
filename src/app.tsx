@@ -1,7 +1,8 @@
 import React from 'react'
+import styles from './index.less'
 
 export default class App extends React.Component {
 	render() {
-		return <div>hello 1212</div>
+		return <div className={styles.testBtn}>hello 1212</div>
 	}
 }
