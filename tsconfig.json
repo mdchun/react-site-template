@@ -10,6 +10,7 @@
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "baseUrl": ".",
+    "declaration":false,
     "importHelpers": true, //避免了ts代码冗余
     "paths": {
       "@/*": [
